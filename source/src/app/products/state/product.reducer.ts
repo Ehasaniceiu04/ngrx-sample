@@ -90,5 +90,21 @@ export const productReducer=createReducer<ProductState>(
             ...state,
             products:action.products
         }
+    }),
+    on(ProductActions.updateProductSuccess,(state,action):ProductState=>{
+        const updatedProduct=state.products.map(
+            item=>action.product.id===item.id?action.product:item
+        );
+        return{
+            ...state,
+            products:updatedProduct,
+            currentProductId:action.product.id,
+            
+        }
+    }),
+    on(ProductActions.updateProductFailure,(state,action):ProductState=>{
+        return{
+            ...state,
+        }
     })
 );
